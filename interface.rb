@@ -14,7 +14,7 @@ class Interface
       @flag = false
       @game.new_round
       user_step
-      dealer_step if @flag == false
+      game.dealer_step if @flag == false
       puts @game.close_round
       puts round_stat
       puts 'Input 1 to continue, 2 to exit'
@@ -28,7 +28,7 @@ class Interface
     puts "#{@game.user.name} bank: #{@game.user.bank}"
     puts "#{@game.user.name} cadrs: #{@game.user.cards}"
     puts "Your points: #{@game.user.score}"
-    return unless @game.user.cards.size < 3
+    return unless @game.can_continue?
 
     puts 'Enter 1 to skip, 2 to get new card, 3 to open cards'
     user_input = gets.chomp.to_i
@@ -36,10 +36,6 @@ class Interface
 
     game.one_more_card(game.user) if user_input == 2
     @flag = true if user_input == 3
-  end
-
-  def dealer_step
-    game.one_more_card(game.dealer) if game.dealer.score < 17
   end
 
   def round_stat

@@ -43,10 +43,18 @@ class Game
     end
   end
 
+  def dealer_step
+    one_more_card(@dealer) if @dealer.score < 17
+  end
+
   def one_more_card(user)
     user.cards << @shuffled_desk[@card_index]
     user.score += @desk.card_value(@shuffled_desk[@card_index])
     @card_index += 1
+  end
+
+  def can_continue?
+    @user.cards.size < 3
   end
 
   private
