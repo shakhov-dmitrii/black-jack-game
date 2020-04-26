@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
+require './user.rb'
+
 class Game
   attr_reader :user, :dealer, :desk, :shuffled_desk, :card_index, :round_bank
 
   REGULAR_BANK = 10
 
-  def initialize
-    print 'Enter your name: '
-    user_name = gets.chomp
+  def initialize(user_name)
     @user = User.new(user_name)
     @dealer = User.new('Dealer')
 
@@ -20,7 +20,11 @@ class Game
   def new_round
     @user.cards = []
     @dealer.cards = []
+    @user.score = 0
+    @dealer.score = 0
     @round_bank = 0
+    @card_index = 0
+    @shuffled_desk = desk.shuffled_desk
     new_card_distribution
     @user.do_bet(REGULAR_BANK)
     @dealer.do_bet(REGULAR_BANK)
